@@ -2,9 +2,11 @@ from random import choice, shuffle
 
 import PySimpleGUI as sg
 
-directions, positions = ['left', 'right'], ['above', 'below_front', 'below_rear']
-shuffle(directions); shuffle(positions)
-direction = choice(directions); last_direction = direction
+directions = ['left', 'right']
+positions = ['above', 'below_front', 'below_rear']
+shuffle(directions)
+shuffle(positions)
+direction = choice(directions)
 position = choice(positions)
 
 def get_images():
@@ -48,7 +50,9 @@ def position_pilotfish():
     # else:  # keep pilotfish on right edge of sharkwindow
     #     pilot_x = round(shark_x + shark_w + 1)
     #     pilot_y = round(shark_y + shark_h/2 - pilot_h/2)
+    pilot_win.SetAlpha(0)
     pilot_win.move(pilot_x, pilot_y)
+    pilot_win.SetAlpha(1)
 
 
 get_images()
@@ -60,7 +64,7 @@ shark_win = sg.Window(
     margins=(0,0),
     border_depth=0,
     grab_anywhere=True,
-    no_titlebar=True,
+    # no_titlebar=True,
     finalize=True,
     )
 
@@ -73,16 +77,30 @@ pilot_win = sg.Window(
     grab_anywhere=True,
     no_titlebar=True,
     keep_on_top=True,
+    alpha_channel=0,
     finalize=True,
     )
 
 shark_w, shark_h = shark_win.size
 pilot_w, pilot_h = pilot_win.size
-# shark_x, shark_y = shark_win.CurrentLocation()
 
 position_pilotfish()
 
+# shark_x, shark_y = shark_win.CurrentLocation()
+last_shark_x, last_shark_y = shark_x, shark_y
+
 while True:
     event, values = shark_win.read(timeout=50)
-    if event in (sg.WIN_CLOSED, 'Exit'):
+    if event == sg.TIMEOUT_KEY:
+        shark_x, shark_y = shark_win.CurrentLocation()
+        if (shark_x, shark_y) != (last_shark_x, last_shark_y):
+            if shark_x > last_shark_x:
+                last_direction = direction = 'right'
+            elif shark_x < last_shark_x:
+                last_direction = direction = 'left'
+            update_images()
+            position_pilotfish()
+            last_shark_x, last_shark_y = shark_x, shark_y
+        continue
+    elif event in (sg.WIN_CLOSED, 'Exit'):
         break
