@@ -73,6 +73,7 @@ shark_win = sg.Window(
     border_depth=0,
     grab_anywhere=True,
     # no_titlebar=True,
+    transparent_color='white',
     finalize=True,
     )
 
@@ -83,9 +84,10 @@ pilot_win = sg.Window(
     margins=(0,0),
     border_depth=0,
     grab_anywhere=True,
-    no_titlebar=True,
+    # no_titlebar=True,
     keep_on_top=True,
     alpha_channel=0,
+    transparent_color='white',
     finalize=True,
     )
 
