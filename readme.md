@@ -10,4 +10,4 @@ randomly selected at run time.)
 
 I dunno, maybe it's cute?
 
-![Screenshot](/images/screenshot.png?raw=true "Pilotfish and blue shark")
+[![Screenshot](https://github.com/therden/pilotfish/raw/master/images/Screenshot.png)]( "Pilotfish and blue shark")
