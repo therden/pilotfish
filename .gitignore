@@ -1,2 +1,3 @@
 *.pyc
-junk_drawer/*
+__pycache__
+junk_drawer
