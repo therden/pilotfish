@@ -74,6 +74,8 @@ shark_win = sg.Window(
     grab_anywhere=True,
     no_titlebar=True,
     transparent_color='white',
+    icon='images/win_blueshark_r',
+    right_click_menu = ['blah',['Continue','Exit'],],
     finalize=True,
     )
 
@@ -88,6 +90,7 @@ pilot_win = sg.Window(
     keep_on_top=True,
     alpha_channel=0,
     transparent_color='white',
+    icon='images/win_pilotfish_r',
     finalize=True,
     )
 
