@@ -6,7 +6,8 @@ that out, I got side-tracked by this little time-waster.
 
 Grab and move the shark, and the pilotfish follows (or leads --
 depending on which of three possible relative positions is randomly
-selected at run time.)  Right-click on the shark and choose **Exit**
-to close the program.
+selected at run time.)  
+
+Right-click on the shark and choose **Exit** to close the program.
 
 ![Screenshot](https://github.com/therden/pilotfish/raw/master/images/Screenshot.png "Pilotfish and blue shark")

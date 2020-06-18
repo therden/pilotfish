@@ -11,11 +11,15 @@ direction = choice(directions)
 position = choice(positions)
 
 if sys.platform.startswith("win"):
+    shark_icon = 'images/win_blueshark.ico'
+    pilot_icon = 'images/win_pilotfish.ico'
     images = {'left':  {'shark': 'images/win_blueshark_l.png',
                         'pilot': 'images/win_pilotfish_l.png'},
               'right': {'shark': 'images/win_blueshark_r.png',
                         'pilot': 'images/win_pilotfish_r.png'}}
 else:
+    shark_icon = 'images/icon_blueshark.png'
+    pilot_icon = 'images/icon_pilotfish.png'
     images = {'left':  {'shark': 'images/blueshark_l.png',
                         'pilot': 'images/pilotfish_l.png'},
               'right': {'shark': 'images/blueshark_r.png',
@@ -72,9 +76,9 @@ shark_win = sg.Window(
     margins=(0,0),
     border_depth=0,
     grab_anywhere=True,
-    no_titlebar=True,
+    # no_titlebar=True,
     transparent_color='white',
-    icon='images/win_blueshark_r',
+    icon=shark_icon,
     right_click_menu = ['blah',['Continue','Exit'],],
     finalize=True,
     )
@@ -86,11 +90,11 @@ pilot_win = sg.Window(
     margins=(0,0),
     border_depth=0,
     grab_anywhere=True,
-    no_titlebar=True,
+    # no_titlebar=True,
     keep_on_top=True,
     alpha_channel=0,
     transparent_color='white',
-    icon='images/win_pilotfish_r',
+    icon=pilot_icon,
     finalize=True,
     )
 
