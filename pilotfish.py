@@ -72,7 +72,7 @@ shark_win = sg.Window(
     margins=(0,0),
     border_depth=0,
     grab_anywhere=True,
-    # no_titlebar=True,
+    no_titlebar=True,
     transparent_color='white',
     finalize=True,
     )
@@ -84,7 +84,7 @@ pilot_win = sg.Window(
     margins=(0,0),
     border_depth=0,
     grab_anywhere=True,
-    # no_titlebar=True,
+    no_titlebar=True,
     keep_on_top=True,
     alpha_channel=0,
     transparent_color='white',
@@ -99,14 +99,16 @@ last_shark_x, last_shark_y = shark_x, shark_y
 position_pilotfish()
 
 while True:
-    event, values = shark_win.read(timeout=100)
+    event, values = shark_win.read(timeout=15)
     if event == sg.TIMEOUT_KEY:
         shark_x, shark_y = shark_win.CurrentLocation()
         if (shark_x, shark_y) != (last_shark_x, last_shark_y):
-            if shark_x > last_shark_x:
+            if shark_x > (last_shark_x + 10):
                 last_direction = direction = 'right'
-            else:
+            elif shark_x < (last_shark_x - 10):
                 last_direction = direction = 'left'
+            else:
+                continue
             update_images()
             position_pilotfish()
             last_shark_x, last_shark_y = shark_x, shark_y
