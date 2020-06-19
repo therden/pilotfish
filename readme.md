@@ -10,4 +10,16 @@ selected at run time.)
 
 Right-click on the shark and choose **Exit** to close the program.
 
-![Screenshot](https://github.com/therden/pilotfish/raw/master/images/Screenshot.png "Pilotfish and blue shark")
+![Screenshot](https://github.com/therden/pilotfish/raw/master/images/Screenshot_Windows.jpg "Blue sharks and pilotfishes")
+
+On Windows OS, only the fishes will be visible -- the windows that
+their images are contained in are transparent.  Other operating systems
+will display each fish in its own blue window.
+
+![Screenshot](https://github.com/therden/pilotfish/raw/master/images/Screenshot_Linux.png "Pilotfish and blue shark")
+
+### Maybe/Someday
+* Pilotfish occasionally changes its position relative to shark within session
+* Auto-pilot mode -- shark and pilotfish move without intervention
+* Specify number of sharks and/or pilotfish at startup
+* Pilotfish occaionally switch which shark they're shadowing
