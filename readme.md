@@ -19,7 +19,5 @@ will display each fish in its own blue window.
 ![Screenshot](https://github.com/therden/pilotfish/raw/master/images/Screenshot_Linux.png "Pilotfish and blue shark")
 
 ### Maybe/Someday
-* Pilotfish occasionally changes its position relative to shark within session
 * Auto-pilot mode -- shark and pilotfish move without intervention
-* Specify number of sharks and/or pilotfish at startup
-* Pilotfish occaionally switch which shark they're shadowing
+* Pilotfish occasionally changes its position relative to shark within session
