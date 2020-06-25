@@ -3,10 +3,9 @@ import sys
 
 import PySimpleGUI as sg
 
-
+shark_image, pilot_image = None, None
 directions = ['left', 'right']
 positions = ['above', 'below_front', 'below_rear']
-
 
 def randomize():
     shuffle(directions)
@@ -14,9 +13,6 @@ def randomize():
     direction = choice(directions)
     position = choice(positions)
     return direction, position
-
-direction, position = randomize()
-
 
 if sys.platform.startswith("win"):
     shark_icon = 'images/win_blueshark48.ico'
@@ -34,29 +30,23 @@ else:
                         'pilot': 'images/pilotfish_r.png'}}
 
 
-def get_images():
-    global shark_image, pilot_image
-
-    shark_image = images[direction]['shark']
-    pilot_image = images[direction]['pilot']
-
-get_images()
+def get_images(direction):
+    return images[direction]['shark'], images[direction]['pilot']
 
 
-def update_images():
-    get_images()
-    shark_win['-SHARK-'].update(shark_image)
-    pilot_win['-PILOT-'].update(pilot_image)
+def update_images(shark, pilot, direction):
+    shark_image, pilot_image = get_images(direction)
+    shark['-SHARK-'].update(shark_image)
+    pilot['-PILOT-'].update(pilot_image)
 
 
-def position_pilotfish(shark_win, pilot_win):
-
+def position_pilotfish(pilot_win, direction):
+    shark_win = pilot_win.metadata['shark']
     shark_w, shark_h = shark_win.size
     pilot_w, pilot_h = pilot_win.size
     shark_x, shark_y = shark_win.CurrentLocation()
     last_shark_x, last_shark_y = shark_x, shark_y
-    # TODO: prolly gonna need to read (direction)from shark metadata
-    #       and (position) from pilotfish metadata
+    position = pilot_win.metadata['position']
 
     if direction == 'left':
         if position == 'above': # above and behind left-facing shark
@@ -84,10 +74,10 @@ def position_pilotfish(shark_win, pilot_win):
     pilot_win.SetAlpha(0)
     pilot_win.move(pilot_x, pilot_y)
     pilot_win.SetAlpha(1)
-    # TODO: prolly gonna need to update (position) from pilotfish metadata
 
 
-def make_shark():
+def make_shark(direction):
+    shark_image = images[direction]['shark']
     shark_win = sg.Window(
         title='Shark Window',
         layout=[[sg.Image(filename=shark_image, key='-SHARK-')]],
@@ -98,14 +88,21 @@ def make_shark():
         no_titlebar=True,
         transparent_color='white',
         icon=shark_icon,
-        right_click_menu = ['blah',['Continue', 'Add another pair', 'Exit'],],
+        right_click_menu = ['blah',['Continue', 'Add another pair', 'Exit', 'Close all'],],
+        metadata={},
         finalize=True,
         )
-    # probably need to set (last_shark_x, last_shark_y and last_direction) in metadata
+    shark_x, shark_y = shark_win.CurrentLocation()
+    shark_win.metadata['last_shark_x'] = shark_x
+    shark_win.metadata['last_shark_y'] = shark_y
+    shark_win.metadata['last_direction'] = direction
     return shark_win
 
 
-def make_pilotfish(shark_win):
+def make_pilotfish(shark):
+    direction = shark.metadata['last_direction']
+    pilot_image = images[direction]['pilot']
+    _, position = randomize()
     pilot_win = sg.Window(
         title='Pilot Fish Window',
         layout=[[sg.Image(filename=pilot_image, key='-PILOT-')]],
@@ -118,7 +115,9 @@ def make_pilotfish(shark_win):
         alpha_channel=0,
         transparent_color='white',
         icon=pilot_icon,
+        metadata={'shark': shark, 'position': position},
         finalize=True,
         )
-    position_pilotfish(shark_win, pilot_win)
+    position_pilotfish(pilot_win, direction)
+    shark.metadata['pilot'] = pilot_win
     return pilot_win
